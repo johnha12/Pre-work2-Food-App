@@ -1,4 +1,5 @@
 from flask import Flask, redirect, url_for, render_template, request
+import requests
 
 app = Flask(__name__)
 
@@ -7,28 +8,39 @@ def home():
   if request.method =="POST":
     ingrediant = request.form["food"]
     new_url = "https://api.spoonacular.com/recipes/complexSearch?apiKey=40fc548487854a7db79b65f0d14bc1c1&query="+ingrediant+"&sort=calories&sortDirection=asc&number=3"
-    return redirect(new_url)
-  
-  # if request.method == "GET":
-  #   # ingrediant = request.form["food"]
-  #   # return redirect(url_for("https://api.spoonacular.com/recipes/complexSearch?apiKey=40fc548487854a7db79b65f0d14bc1c1&query="+ingrediant+"&sort=calories&sortDirection=asc&number=3"))
-  #   return render_template("testing.html")
+    data = requests.get(new_url).json()
 
+    title1 = data['results'][0]["title"]
+    image1 = data['results'][0]["image"]
+    nutrition1 = data['results'][0]["nutrition"]
+
+    title2 = data['results'][1]["title"]
+    image2 = data['results'][1]["image"]
+    nutrition2 = data['results'][1]["nutrition"]
+
+    title3 = data['results'][2]["title"]
+    image3 = data['results'][2]["image"]
+    nutrition3 = data['results'][2]["nutrition"]
+
+    return render_template("search.html", title1 = title1, image1 = image1, nutrition1 = nutrition1, title2 = title2, image2 = image2, nutrition2 = nutrition2, title3 = title3, image3 = image3, nutrition3 = nutrition3)
+    
   else: return render_template("index.html")
-
-@app.route("/search", methods=["POST", "GET"])
-def search():
-  if request.method =="POST":
-    ingrediant = request.form["food"]
-    # new_url = "https://api.spoonacular.com/recipes/complexSearch?apiKey=40fc548487854a7db79b65f0d14bc1c1&query="+ingrediant+"&sort=calories&sortDirection=asc&number=3"
-    return redirect(url_for())
   
+@app.route('/testing')
+def get_data():
+    # dummy variable to avoid api call limit
+    data = {'results': [{'id': 659929, 'title': 'Shrimp and Cucumber Lettuce Wraps With Fresh Dill', 'image': 'https://img.spoonacular.com/recipes/659929-312x231.jpg', 'imageType': 'jpg', 'nutrition': {'nutrients': [{'name': 'Calories', 'amount': 30.0658, 'unit': 'kcal'}]}}, {'id': 632819, 'title': 'Asian Chickpea Lettuce Wraps', 'image': 'https://img.spoonacular.com/recipes/632819-312x231.jpg', 'imageType': 'jpg', 'nutrition': {'nutrients': [{'name': 'Calories', 'amount': 51.6565, 'unit': 'kcal'}]}}, {'id': 632795, 'title': 'Asian Barbecue Chicken Lettuce Wraps', 'image': 'https://img.spoonacular.com/recipes/632795-312x231.jpg', 'imageType': 'jpg', 'nutrition': {'nutrients': [{'name': 'Calories', 'amount': 60.3717, 'unit': 'kcal'}]}}], 'offset': 0, 'number': 3, 'totalResults': 112}
 
+    data2 = []
+    for i in range(3):
+      data2.append([data['results'][i]["title"], data['results'][i]["image"], data['results'][i]["nutrition"]])
 
-# @app.route("/<food>")
-# def ingrediant(food):
-#   return redirect(url_for("https://api.spoonacular.com/recipes/complexSearch?apiKey=40fc548487854a7db79b65f0d14bc1c1&query="+ingrediant+"&sort=calories&sortDirection=asc&number=3"))
+    title1 = data['results'][0]["title"]
+    image1 = data['results'][0]["image"]
+    nutrition1 = data['results'][0]["nutrition"]
 
+    return render_template("search.html", title1 = title1, image1 = image1, nutrition1 = nutrition1)
+  
 
 if __name__ == "__main__":
   app.run(debug=True)

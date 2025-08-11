@@ -1,0 +1,26 @@
+{% block content %}
+<h3>Here are your recipes</h3>
+<p>
+  <p>1. {{title1}}</p>
+  <p><img src={{image1}} alt="image 1" /></p>
+  <p>{{nutrition1}}</p>
+</p>
+
+<p>
+  <p>2. {{title2}}</p>
+  <p><img src={{image2}} alt="image 2" /></p>
+  <p>{{nutrition2}}</p>
+</p>
+
+<p>
+  <p>3. {{title3}}</p>
+  <p><img src={{image3}} alt="image 3" /></p>
+  <p>{{nutrition3}}</p>
+</p>
+
+<button onclick="location.href='/'" type="button">
+  Try Again</button>
+
+
+
+{% endblock %}
