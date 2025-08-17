@@ -51,3 +51,7 @@ pip install flask
 UI needs
 - home button, to search again
 - seperate page, to process search
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+I'm having a lot of fun. I notice when I'm in the middle of a problem. I really want to solve it and I feel good when I figure it out.
