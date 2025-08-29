@@ -43,14 +43,22 @@ def home():
     return render_template("search.html", title1 = title1, image1 = image1, nutrition1 = nutrition1, title2 = title2, image2 = image2, nutrition2 = nutrition2, title3 = title3, image3 = image3, nutrition3 = nutrition3)
     
   else: return render_template("index.html")
+
+@app.route('/searches')
+def display_searches():
+    with open("searches.json", 'r+') as file:
+        # Load existing data into a dictionary
+        file_data = json.load(file)
+        
+        # Append new data to the 'searches' list in 
+        data = file_data["searches"]
+    return render_template("past_searches.html", data = data)
   
 
 @app.route('/testing')
 def get_data2():
-    
     search = "toast"
     write_json(search)
-
     return render_template("no_results.html", message = "Just testing Json write up")
 
 # Function to append new data to JSON file

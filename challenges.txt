@@ -1,2 +1,5 @@
 08/07/25:
 - reading documentation on fatsecret
+
+08/27/25:
+- href outside one director but dont need to
