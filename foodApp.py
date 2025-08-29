@@ -52,6 +52,7 @@ def display_searches():
         
         # Append new data to the 'searches' list in 
         data = file_data["searches"]
+        data.reverse()
     return render_template("past_searches.html", data = data)
   
 
